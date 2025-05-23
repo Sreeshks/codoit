@@ -1,240 +1,442 @@
-import './App.css'
+import React, { useEffect, useRef } from 'react';
+import * as THREE from 'three';
+import './App.css';
 
-function App() {
-  return (
-    <div className="min-h-screen bg-dark">
-      <header className="bg-dark/95 shadow-lg sticky top-0 z-50 backdrop-blur-sm border-b border-primary/20">
-        <div className="container-custom py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2 relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-              <a href="#" className="relative flex items-center">
-                <span className="gold-accent font-bold text-3xl shine relative">Co<span className="text-white">Do</span>It</span>
-                <span className="absolute -top-1 -right-2 w-2 h-2 rounded-full bg-primary animate-ping"></span>
-              </a>
-            </div>
-            
-            <nav className="hidden md:flex space-x-8 stagger-fade-in">
-              <a href="#" className="nav-link relative font-medium text-white hover:text-primary transition-all duration-300">
-                Home
-              </a>
-              <a href="#" className="nav-link relative font-medium text-white hover:text-primary transition-all duration-300">
-                About
-              </a>
-              <a href="#" className="nav-link relative font-medium text-white hover:text-primary transition-all duration-300">
-                Services
-              </a>
-              <a href="#" className="nav-link relative font-medium text-white hover:text-primary transition-all duration-300">
-                Contact
-              </a>
-            </nav>
-            
-            <div className="hidden md:block">
-              <a href="#" className="btn btn-primary">
-                Get Started
-              </a>
-            </div>
-            
-            <div className="md:hidden">
-              <button className="text-white hover:text-primary transition-all duration-300">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="flex-grow">
-        <section className="premium-section relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full">
-            <div className="absolute top-20 left-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl pulse"></div>
-            <div className="absolute bottom-10 right-10 w-80 h-80 bg-primary/5 rounded-full blur-3xl pulse" style={{animationDelay: '1s'}}></div>
-            <div className="absolute top-1/3 right-1/4 w-40 h-40 bg-secondary/5 rounded-full blur-2xl pulse" style={{animationDelay: '2s'}}></div>
-          </div>
-          
-          <div className="container-custom relative z-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <div className="fade-in">
-                <span className="inline-block px-4 py-2 rounded-full bg-primary/20 text-primary mb-6 shine relative overflow-hidden">
-                  <span className="gold-accent relative z-10">Premium Digital Solutions</span>
-                </span>
-                <h1 className="text-4xl md:text-6xl font-bold mb-8 text-white stagger-fade-in leading-tight">
-                  Transform Your <br/>
-                  Ideas Into <span className="gold-accent shine">Reality</span>
-                </h1>
-                <p className="text-xl mb-10 text-white/90 max-w-lg stagger-fade-in" style={{animationDelay: '0.2s'}}>
-                  Co Do It helps businesses and startups build innovative digital solutions. 
-                  We turn your vision into impactful products that drive growth and success.
-                </p>
-                <div className="flex flex-wrap gap-6 stagger-fade-in" style={{animationDelay: '0.4s'}}>
-                  <a href="#" className="btn btn-primary">
-                    Get Started
-                  </a>
-                  <a href="#" className="btn btn-secondary">
-                    Learn More
-                  </a>
-                </div>
-                
-                <div className="mt-12 flex flex-wrap gap-4 stagger-fade-in" style={{animationDelay: '0.6s'}}>
-                  <div className="premium-card flex items-center gap-3">
-                    <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span className="text-white">Premium Design</span>
-                  </div>
-                  <div className="premium-card flex items-center gap-3">
-                    <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span className="text-white">Responsive</span>
-                  </div>
-                  <div className="premium-card flex items-center gap-3">
-                    <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span className="text-white">Modern Tech</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="hidden md:block relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-20 animate-pulse"></div>
-                <div className="premium-card aspect-square p-8 relative z-10">
-                  <div className="h-full w-full flex items-center justify-center relative">
-                    <div className="text-center relative z-10 fade-in">
-                      <div className="text-7xl font-bold gold-accent mb-6 shine relative">
-                        Co<span className="text-white">Do</span>It
-                        <span className="absolute -top-1 -right-2 w-2 h-2 rounded-full bg-primary animate-ping"></span>
-                      </div>
-                      <p className="text-xl text-white/90">Your Premium Digital Partner</p>
-                      
-                      <div className="absolute -top-6 -right-6 bg-primary/90 text-dark px-4 py-2 rounded-lg rotate-12 animate-pulse shadow-lg">
-                        Premium
-                      </div>
-                      <div className="absolute -bottom-6 -left-6 bg-dark border border-primary/50 text-primary px-4 py-2 rounded-lg -rotate-12 animate-pulse shadow-lg" style={{animationDelay: '0.5s'}}>
-                        Innovative
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="premium-section bg-gray-dark">
-          <div className="container-custom">
-            <div className="text-center mb-16 fade-in">
-              <span className="inline-block px-4 py-2 rounded-full bg-primary/20 text-primary mb-6 mx-auto shine">
-                <span className="gold-accent">Premium Quality</span>
-              </span>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Why Choose <span className="gold-accent">Co Do It</span>?</h2>
-              <p className="text-xl max-w-3xl mx-auto text-gray-light">
-                We combine technical expertise with creative thinking to deliver solutions that exceed expectations.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 stagger-fade-in">
-              <div className="premium-card">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
-                  <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-white text-center">Innovative <span className="gold-accent">Solutions</span></h3>
-                <p className="text-gray-light text-center text-lg">
-                  We stay ahead of the curve with cutting-edge technologies and creative approaches.
-                </p>
-              </div>
-              <div className="premium-card">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
-                  <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-white text-center">Fast <span className="gold-accent">Delivery</span></h3>
-                <p className="text-gray-light text-center text-lg">
-                  Our agile development process ensures quick turnaround times without compromising quality.
-                </p>
-              </div>
-              <div className="premium-card">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
-                  <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-white text-center">Expert <span className="gold-accent">Team</span></h3>
-                <p className="text-gray-light text-center text-lg">
-                  Our team brings years of experience to every project we undertake.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="premium-section relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full">
-            <div className="absolute top-10 left-10 w-40 h-40 bg-primary/10 rounded-full pulse"></div>
-            <div className="absolute bottom-10 right-10 w-60 h-60 bg-primary/10 rounded-full pulse" style={{animationDelay: '1.5s'}}></div>
-            <div className="absolute top-1/2 left-1/4 w-20 h-20 bg-primary/10 rounded-full pulse" style={{animationDelay: '0.7s'}}></div>
-          </div>
-          <div className="container-custom text-center relative z-10 fade-in">
-            <span className="inline-block px-4 py-2 rounded-full bg-primary/20 text-primary mb-6 mx-auto shine">
-              <span className="gold-accent">Premium Experience</span>
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-8">Ready to <span className="gold-accent">Elevate</span> Your Business?</h2>
-            <p className="text-xl mb-10 max-w-3xl mx-auto text-white">
-              Let's discuss how Co Do It can help you achieve your business goals with our innovative digital solutions.
-            </p>
-            <a href="#" className="btn btn-primary">
-              Contact Us Today
-            </a>
-          </div>
-        </section>
-      </main>
-
-      <footer className="premium-footer relative overflow-hidden">
-        <div className="container-custom relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 stagger-fade-in">
-            <div>
-              <span className="gold-accent text-3xl font-bold mb-6 inline-block shine">Co Do It</span>
-              <p className="text-gray-300 text-lg mt-4">
-                Empowering businesses to achieve their digital transformation goals with premium solutions.
-              </p>
-              <div className="flex space-x-4 mt-8">
-                <a href="#" className="premium-card p-3 rounded-full text-primary hover:bg-primary hover:text-dark transition-all duration-300">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-                  </svg>
-                </a>
-                <a href="#" className="premium-card p-3 rounded-full text-primary hover:bg-primary hover:text-dark transition-all duration-300">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                  </svg>
-                </a>
-                <a href="#" className="premium-card p-3 rounded-full text-primary hover:bg-primary hover:text-dark transition-all duration-300">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-6 text-primary">Quick Links</h3>
-              <ul className="space-y-4">
-                <li><a href="#" className="text-gray-300 hover:text-primary transition-all duration-300 text-lg">Home</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-primary transition-all duration-300 text-lg">About Us</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-primary transition-all duration-300 text-lg">Services</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-primary transition-all duration-300 text-lg">Contact</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
-  )
+// Add type declarations for particles
+interface Particle extends THREE.Mesh {
+  velocity: {
+    x: number;
+    y: number;
+    z: number;
+  };
 }
 
-export default App
+const App: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  let scene: THREE.Scene;
+  let camera: THREE.PerspectiveCamera;
+  let renderer: THREE.WebGLRenderer;
+  let particles: Particle[] = [];
+
+  useEffect(() => {
+    init3DBackground();
+    
+    // Add loading animation
+    document.body.style.opacity = '0';
+    setTimeout(() => {
+      document.body.style.transition = 'opacity 1s ease';
+      document.body.style.opacity = '1';
+    }, 100);
+
+    // Navigation scroll effect
+    const handleScroll = () => {
+      const navbar = document.getElementById('navbar');
+      const scrollIndicator = document.getElementById('scrollIndicator');
+      
+      if (navbar && scrollIndicator) {
+        if (window.scrollY > 100) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+        
+        // Update scroll indicator
+        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        scrollIndicator.style.width = scrollPercent + '%';
+      }
+    };
+
+    // Smooth scrolling for navigation links
+    const handleSmoothScroll = (e: Event) => {
+      const target = e.target as HTMLAnchorElement;
+      if (target.getAttribute('href')?.startsWith('#')) {
+        e.preventDefault();
+        const element = document.querySelector(target.getAttribute('href') || '');
+        if (element) {
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }
+    };
+
+    // Particle system for interactive effects
+    const createParticle = (x: number, y: number) => {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = x + 'px';
+      particle.style.top = y + 'px';
+      particle.style.width = Math.random() * 5 + 2 + 'px';
+      particle.style.height = particle.style.width;
+      particle.style.opacity = (Math.random() * 0.5 + 0.3).toString();
+      
+      document.body.appendChild(particle);
+      
+      setTimeout(() => {
+        particle.remove();
+      }, 8000);
+    };
+
+    // Add particle effects on mouse move
+    let particleTimer: ReturnType<typeof setTimeout>;
+    const handleMouseMove = (e: MouseEvent) => {
+      clearTimeout(particleTimer);
+      particleTimer = setTimeout(() => {
+        if (Math.random() > 0.95) {
+          createParticle(e.clientX, e.clientY);
+        }
+      }, 50);
+    };
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = entry.target as HTMLElement;
+          target.style.opacity = '1';
+          target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe elements for scroll animations
+    document.querySelectorAll('.service-card, .feature-item').forEach(el => {
+      const element = el as HTMLElement;
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(50px)';
+      element.style.transition = 'all 0.6s ease';
+      observer.observe(element);
+    });
+
+    // CTA button interactions
+    document.querySelectorAll('.cta-btn, .btn-primary, .btn-secondary').forEach(btn => {
+      const button = btn as HTMLElement;
+      button.addEventListener('mouseenter', () => {
+        button.style.animation = 'glow 1s ease-in-out';
+      });
+      
+      button.addEventListener('mouseleave', () => {
+        button.style.animation = '';
+      });
+    });
+
+    // Mobile menu toggle
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (mobileMenu && navLinks) {
+      mobileMenu.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+      });
+    }
+
+    // Window resize handler
+    const handleResize = () => {
+      if (renderer && camera) {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+    };
+
+    // Event listeners
+    window.addEventListener('scroll', handleScroll);
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', handleSmoothScroll);
+    });
+    document.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.removeEventListener('click', handleSmoothScroll);
+      });
+      document.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+      if (particleTimer) clearTimeout(particleTimer);
+    };
+  }, []);
+
+  const init3DBackground = () => {
+    if (!canvasRef.current) return;
+
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    renderer = new THREE.WebGLRenderer({
+      canvas: canvasRef.current,
+      alpha: true,
+      antialias: true
+    });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    
+    // Create particles
+    const geometry = new THREE.SphereGeometry(0.1, 8, 8);
+    const material = new THREE.MeshBasicMaterial({ 
+      color: 0xFFD700,
+      transparent: true,
+      opacity: 0.6
+    });
+    
+    for (let i = 0; i < 100; i++) {
+      const mesh = new THREE.Mesh(geometry, material);
+      const particle = mesh as unknown as Particle;
+      particle.position.set(
+        (Math.random() - 0.5) * 100,
+        (Math.random() - 0.5) * 100,
+        (Math.random() - 0.5) * 100
+      );
+      particle.velocity = {
+        x: (Math.random() - 0.5) * 0.02,
+        y: (Math.random() - 0.5) * 0.02,
+        z: (Math.random() - 0.5) * 0.02
+      };
+      particles.push(particle);
+      scene.add(particle);
+    }
+    
+    camera.position.z = 50;
+    animate3D();
+  };
+
+  const animate3D = () => {
+    requestAnimationFrame(animate3D);
+    
+    particles.forEach(particle => {
+      particle.position.x += particle.velocity.x;
+      particle.position.y += particle.velocity.y;
+      particle.position.z += particle.velocity.z;
+      
+      if (particle.position.x > 50) particle.position.x = -50;
+      if (particle.position.x < -50) particle.position.x = 50;
+      if (particle.position.y > 50) particle.position.y = -50;
+      if (particle.position.y < -50) particle.position.y = 50;
+      if (particle.position.z > 50) particle.position.z = -50;
+      if (particle.position.z < -50) particle.position.z = 50;
+      
+      particle.rotation.x += 0.01;
+      particle.rotation.y += 0.01;
+    });
+    
+    renderer.render(scene, camera);
+  };
+
+  return (
+    <>
+      <div className="scroll-indicator" id="scrollIndicator"></div>
+      <canvas ref={canvasRef} id="bg-canvas"></canvas>
+      
+      <nav id="navbar">
+        <div className="nav-container">
+          <div className="logo">CO DO IT</div>
+          <ul className="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <button className="cta-btn">Get Started</button>
+          <div className="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </nav>
+      
+      <section className="hero" id="home">
+        <div className="floating-element floating-1"></div>
+        <div className="floating-element floating-2"></div>
+        <div className="floating-element floating-3"></div>
+        
+        <div className="hero-content">
+          <h1 className="hero-title">Transform Your Digital Vision</h1>
+          <p className="hero-subtitle">We turn innovative ideas into powerful digital solutions that drive growth and success for forward-thinking businesses.</p>
+          <div className="hero-buttons">
+            <a href="#services" className="btn-primary">Explore Services</a>
+            <a href="#contact" className="btn-secondary">Start Project</a>
+          </div>
+        </div>
+      </section>
+      
+      <section className="services" id="services">
+        <h2 className="section-title">Our Premium Services</h2>
+        <p className="section-subtitle">Cutting-edge solutions tailored to elevate your business to new heights</p>
+        
+        <div className="services-grid">
+          <div className="service-card">
+            <div className="service-icon">
+              <svg width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            <h3>Web Development</h3>
+            <p>Custom websites and web applications built with cutting-edge technologies. From responsive design to complex functionality, we create digital experiences that captivate and convert.</p>
+          </div>
+          
+          <div className="service-card">
+            <div className="service-icon">
+              <svg width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+              </svg>
+            </div>
+            <h3>Mobile Apps</h3>
+            <p>Native and cross-platform mobile applications that deliver exceptional user experiences. From iOS to Android, we build apps that users love and businesses rely on.</p>
+          </div>
+          
+          <div className="service-card">
+            <div className="service-icon">
+              <svg width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+            </div>
+            <h3>Analytics & Data</h3>
+            <p>Transform raw data into actionable insights with our advanced analytics solutions. Make informed decisions with real-time dashboards and comprehensive reporting.</p>
+          </div>
+          
+          <div className="service-card">
+            <div className="service-icon">
+              <svg width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+            </div>
+            <h3>UI/UX Design</h3>
+            <p>Beautiful, intuitive designs that create meaningful connections between your brand and users. We craft experiences that are both visually stunning and functionally superior.</p>
+          </div>
+          
+          <div className="service-card">
+            <div className="service-icon">
+              <svg width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+            </div>
+            <h3>Cloud Solutions</h3>
+            <p>Scalable cloud infrastructure and deployment solutions that grow with your business. Secure, reliable, and optimized for peak performance across all platforms.</p>
+          </div>
+          
+          <div className="service-card">
+            <div className="service-icon">
+              <svg width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <h3>Digital Strategy</h3>
+            <p>Comprehensive digital transformation strategies that align technology with your business goals. From planning to execution, we guide your digital journey.</p>
+          </div>
+        </div>
+      </section>
+      
+      <section className="features" id="features">
+        <h2 className="section-title">Why Choose CO DO IT?</h2>
+        <p className="section-subtitle">We combine innovation, expertise, and passion to deliver exceptional results</p>
+        
+        <div className="features-grid">
+          <div className="feature-item">
+            <div className="feature-number">01</div>
+            <h4>Premium Quality</h4>
+            <p>Every project is crafted with attention to detail and built to exceed industry standards.</p>
+          </div>
+          
+          <div className="feature-item">
+            <div className="feature-number">02</div>
+            <h4>Lightning Fast</h4>
+            <p>Rapid development cycles without compromising on quality or functionality.</p>
+          </div>
+          
+          <div className="feature-item">
+            <div className="feature-number">03</div>
+            <h4>24/7 Support</h4>
+            <p>Round-the-clock support to ensure your digital solutions run smoothly.</p>
+          </div>
+          
+          <div className="feature-item">
+            <div className="feature-number">04</div>
+            <h4>Scalable Solutions</h4>
+            <p>Future-proof technologies that grow and adapt with your business needs.</p>
+          </div>
+        </div>
+      </section>
+      
+      <section className="cta-section" id="contact">
+        <div className="cta-content">
+          <h2 className="cta-title">Ready to Transform Your Business?</h2>
+          <p className="section-subtitle">Let's discuss how CO DO IT can bring your vision to life with cutting-edge digital solutions.</p>
+          <div className="hero-buttons">
+            <a href="#" className="btn-primary">Start Your Project</a>
+            <a href="#" className="btn-secondary">Schedule Consultation</a>
+          </div>
+        </div>
+      </section>
+      
+      <footer>
+        <div className="footer-content">
+          <div className="footer-section">
+            <h4>CO DO IT</h4>
+            <p>Transforming digital visions into reality through innovative solutions and exceptional craftsmanship.</p>
+            <div className="social-links">
+              <a href="#" className="social-link">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                </svg>
+              </a>
+              <a href="#" className="social-link">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.16c-.37.63-.58 1.37-.58 2.15 0 .88.35 1.68.92 2.27C3.74 10.13 2.79 9.84 2 9.33v.05c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 01-1.93.07 4.28 4.28 0 004 2.98 8.521 8.521 0 01-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                </svg>
+              </a>
+              <a href="#" className="social-link">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              <a href="#" className="social-link">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.747.099.118.112.223.085.345-.09.381-.294 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.739-1.378l-.742 2.811c-.269 1.045-1.004 2.352-1.495 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001.012.001z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          
+          <div className="footer-section">
+            <h4>Services</h4>
+            <p><a href="#services">Web Development</a></p>
+            <p><a href="#services">Mobile Apps</a></p>
+            <p><a href="#services">UI/UX Design</a></p>
+            <p><a href="#services">Cloud Solutions</a></p>
+          </div>
+          
+          <div className="footer-section">
+            <h4>Company</h4>
+            <p><a href="#features">About Us</a></p>
+            <p><a href="#contact">Contact</a></p>
+            <p><a href="#">Careers</a></p>
+            <p><a href="#">Blog</a></p>
+          </div>
+          
+          <div className="footer-section">
+            <h4>Contact Info</h4>
+            <p>📧 hello@codoit.com</p>
+            <p>📱 +1 (555) 123-4567</p>
+            <p>📍 San Francisco, CA</p>
+          </div>
+        </div>
+        
+        <div className="copyright">
+          <p>&copy; 2025 CO DO IT. All rights reserved. | Crafted with ❤️ for digital excellence</p>
+        </div>
+      </footer>
+    </>
+  );
+};
+
+export default App;

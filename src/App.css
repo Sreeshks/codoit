@@ -554,3 +554,43 @@ footer {
   right: 50%;
   animation-delay: -4s;
 }
+
+.nav-logo-image {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: var(--dark);
+  transition: all 0.5s ease;
+  cursor: pointer;
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+.nav-logo-image:hover {
+  transform: scale(1.1);
+  animation: glowPulse 1.5s ease-in-out infinite;
+}
+
+/* Add smooth transition for all transforms */
+.nav-logo-image {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Add a trail effect */
+.nav-logo-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-gold);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.nav-logo-image:hover::after {
+  opacity: 0.2;
+}

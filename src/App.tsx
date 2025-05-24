@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import './App.css';
 
@@ -13,10 +13,63 @@ interface Particle extends THREE.Mesh {
 
 const App: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const logoRef = useRef<HTMLImageElement>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
   let scene: THREE.Scene;
   let camera: THREE.PerspectiveCamera;
   let renderer: THREE.WebGLRenderer;
   let particles: Particle[] = [];
+
+  const animateLogo = () => {
+    if (!logoRef.current || isAnimating) return;
+    
+    setIsAnimating(true);
+    const logo = logoRef.current;
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const ctaBtn = document.querySelector('.cta-btn');
+    
+    // Store original position
+    const originalPosition = logo.getBoundingClientRect();
+    
+    // Animation sequence
+    const sequence = async () => {
+      // Move to each nav link
+      for (const link of navLinks) {
+        const rect = link.getBoundingClientRect();
+        logo.style.transform = `translate(${rect.left - originalPosition.left}px, ${rect.top - originalPosition.top}px) rotate(360deg)`;
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+      
+      // Move to CTA button
+      if (ctaBtn) {
+        const rect = ctaBtn.getBoundingClientRect();
+        logo.style.transform = `translate(${rect.left - originalPosition.left}px, ${rect.top - originalPosition.top}px) rotate(720deg)`;
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+      
+      // Return to original position
+      logo.style.transform = 'translate(0, 0) rotate(0deg)';
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      setIsAnimating(false);
+    };
+    
+    sequence();
+  };
+
+  useEffect(() => {
+    // Add click event to logo
+    const logo = logoRef.current;
+    if (logo) {
+      logo.addEventListener('click', animateLogo);
+    }
+
+    return () => {
+      if (logo) {
+        logo.removeEventListener('click', animateLogo);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     init3DBackground();
@@ -239,7 +292,12 @@ const App: React.FC = () => {
     <nav id="navbar">
         <div className="nav-container">
           <div className="logo">
-            <img src="/Codoit Logo.jpeg" alt="CO DO IT Logo" className="logo-image" />
+            <img 
+              ref={logoRef}
+              src="/Codoit Logo.jpeg" 
+              alt="CO DO IT Logo" 
+              className="logo-image nav-logo-image" 
+            />
           </div>
           <ul className="nav-links">
                 <li><a href="#home">Home</a></li>

@@ -172,13 +172,15 @@ body {
   margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 4rem;
+  gap: 6rem;
   width: 100%;
   flex-direction: row-reverse;
+  padding: 0 2rem;
 }
 
 .hero-logo {
   flex-shrink: 0;
+  position: relative;
 }
 
 @keyframes glowPulse {
@@ -194,13 +196,14 @@ body {
 }
 
 .hero-logo-image {
-  height: 200px;
-  width: 200px;
+  height: 300px;
+  width: 300px;
   object-fit: cover;
   border-radius: 50%;
   background: var(--dark);
   transition: all 0.3s ease;
   animation: float 6s ease-in-out infinite, glowPulse 3s ease-in-out infinite;
+  box-shadow: 0 0 50px rgba(255, 215, 0, 0.2);
 }
 
 .hero-logo-image:hover {
@@ -212,39 +215,41 @@ body {
   flex: 1;
   text-align: left;
   max-width: 600px;
+  padding-top: 2rem;
 }
 
 .hero-title {
-  font-size: 4rem;
+  font-size: 4.5rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  line-height: 1.2;
+  line-height: 1.1;
   background: var(--gradient-gold);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
 }
 
 .hero-subtitle {
   font-size: 1.25rem;
   color: var(--gray-light);
   margin-bottom: 2.5rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  line-height: 1.6;
+  max-width: 500px;
 }
 
 .hero-buttons {
   display: flex;
-  gap: 1rem;
-  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
 .btn-primary, .btn-secondary {
-  padding: 1rem 2rem;
+  padding: 1rem 2.5rem;
   border-radius: 0.5rem;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
+  font-size: 1.1rem;
 }
 
 .btn-primary {
@@ -462,7 +467,52 @@ footer {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .hero-container {
+    gap: 4rem;
+    padding: 0 1rem;
+  }
+
+  .hero-logo-image {
+    height: 250px;
+    width: 250px;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 3rem;
+  }
+
+  .hero-content {
+    text-align: center;
+    padding-top: 0;
+  }
+
+  .hero-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .hero-logo-image {
+    height: 200px;
+    width: 200px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
   .nav-links {
     display: none;
   }
@@ -481,30 +531,6 @@ footer {
     background: rgba(10, 10, 10, 0.98);
     padding: 1rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .hero-container {
-    flex-direction: column;
-    text-align: center;
-    gap: 2rem;
-  }
-
-  .hero-content {
-    text-align: center;
-  }
-
-  .hero-logo-image {
-    height: 150px;
-    width: 150px;
-  }
-
-  .hero-buttons {
-    flex-direction: column;
-  }
-
-  .btn-primary, .btn-secondary {
-    width: 100%;
-    text-align: center;
   }
 
   .services-grid, .features-grid {

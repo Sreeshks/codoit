@@ -11,6 +11,14 @@ interface Particle extends THREE.Mesh {
   };
 }
 
+// Declare window properties
+declare global {
+  interface Window {
+    mouseX: number;
+    mouseY: number;
+  }
+}
+
 const LoadingScreen: React.FC = () => {
   return (
     <div className="loading-screen">
@@ -258,56 +266,118 @@ const App: React.FC = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     
-    // Create particles
+    // Create particles with different sizes and colors
+    const particleCount = 200;
     const geometry = new THREE.SphereGeometry(0.1, 8, 8);
-    const material = new THREE.MeshBasicMaterial({ 
-      color: 0xFFD700,
-      transparent: true,
-      opacity: 0.6
-    });
     
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < particleCount; i++) {
+      const size = Math.random() * 0.2 + 0.1;
+      const material = new THREE.MeshBasicMaterial({ 
+        color: new THREE.Color(
+          Math.random() * 0.5 + 0.5, // R: 0.5-1.0
+          Math.random() * 0.5 + 0.5, // G: 0.5-1.0
+          Math.random() * 0.5 + 0.5  // B: 0.5-1.0
+        ),
+        transparent: true,
+        opacity: Math.random() * 0.5 + 0.3
+      });
+      
       const mesh = new THREE.Mesh(geometry, material);
       const particle = mesh as unknown as Particle;
+      
+      // Random position in a larger space
       particle.position.set(
-        (Math.random() - 0.5) * 100,
-        (Math.random() - 0.5) * 100,
-        (Math.random() - 0.5) * 100
+        (Math.random() - 0.5) * 150,
+        (Math.random() - 0.5) * 150,
+        (Math.random() - 0.5) * 150
       );
+      
+      // Random velocity
       particle.velocity = {
         x: (Math.random() - 0.5) * 0.02,
         y: (Math.random() - 0.5) * 0.02,
         z: (Math.random() - 0.5) * 0.02
       };
+      
+      // Random scale
+      particle.scale.set(size, size, size);
+      
       particles.push(particle);
       scene.add(particle);
     }
     
-    camera.position.z = 50;
+    // Add ambient light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+    
+    // Add point light
+    const pointLight = new THREE.PointLight(0xffffff, 1);
+    pointLight.position.set(50, 50, 50);
+    scene.add(pointLight);
+    
+    camera.position.z = 100;
     animate3D();
   };
 
   const animate3D = () => {
     requestAnimationFrame(animate3D);
     
-    particles.forEach(particle => {
+    // Update mouse position for interactive effect
+    const mouseX = (window.mouseX || 0) * 0.001;
+    const mouseY = (window.mouseY || 0) * 0.001;
+    
+    particles.forEach((particle, index) => {
+      // Update position
       particle.position.x += particle.velocity.x;
       particle.position.y += particle.velocity.y;
       particle.position.z += particle.velocity.z;
       
-      if (particle.position.x > 50) particle.position.x = -50;
-      if (particle.position.x < -50) particle.position.x = 50;
-      if (particle.position.y > 50) particle.position.y = -50;
-      if (particle.position.y < -50) particle.position.y = 50;
-      if (particle.position.z > 50) particle.position.z = -50;
-      if (particle.position.z < -50) particle.position.z = 50;
+      // Boundary check with smooth wrapping
+      const boundary = 75;
+      if (particle.position.x > boundary) particle.position.x = -boundary;
+      if (particle.position.x < -boundary) particle.position.x = boundary;
+      if (particle.position.y > boundary) particle.position.y = -boundary;
+      if (particle.position.y < -boundary) particle.position.y = boundary;
+      if (particle.position.z > boundary) particle.position.z = -boundary;
+      if (particle.position.z < -boundary) particle.position.z = boundary;
       
+      // Add subtle rotation
       particle.rotation.x += 0.01;
       particle.rotation.y += 0.01;
+      
+      // Add mouse interaction
+      const distanceX = particle.position.x - mouseX * 100;
+      const distanceY = particle.position.y - mouseY * 100;
+      const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+      
+      if (distance < 50) {
+        const force = (50 - distance) / 50;
+        particle.position.x += force * 0.1;
+        particle.position.y += force * 0.1;
+      }
     });
+    
+    // Rotate camera slightly
+    camera.position.x = Math.sin(Date.now() * 0.0001) * 10;
+    camera.position.y = Math.cos(Date.now() * 0.0001) * 10;
+    camera.lookAt(scene.position);
     
     renderer.render(scene, camera);
   };
+
+  useEffect(() => {
+    // Add mouse move event listener
+    const handleMouseMove = (event: MouseEvent) => {
+      window.mouseX = event.clientX - window.innerWidth / 2;
+      window.mouseY = event.clientY - window.innerHeight / 2;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   if (isLoading) {
     return <LoadingScreen />;

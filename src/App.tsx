@@ -11,14 +11,39 @@ interface Particle extends THREE.Mesh {
   };
 }
 
+const LoadingScreen: React.FC = () => {
+  return (
+    <div className="loading-screen">
+      <div className="loading-content">
+        <img 
+          src="/Codoit Logo.jpeg" 
+          alt="CO DO IT Logo" 
+          className="loading-logo" 
+        />
+        {/* <div className="loading-text">Loading...</div> */}
+      </div>
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const logoRef = useRef<HTMLImageElement>(null);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   let scene: THREE.Scene;
   let camera: THREE.PerspectiveCamera;
   let renderer: THREE.WebGLRenderer;
   let particles: Particle[] = [];
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // Show loading screen for 2 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const animateLogo = () => {
     if (!logoRef.current || isAnimating) return;
@@ -283,6 +308,10 @@ const App: React.FC = () => {
     
     renderer.render(scene, camera);
   };
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>

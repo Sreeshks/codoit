@@ -19,6 +19,153 @@ declare global {
   }
 }
 
+// Popup Ad Component
+const PopupAd: React.FC<{ onClose: () => void; onRegister: () => void }> = ({ onClose, onRegister }) => {
+  return (
+    <div className="popup-overlay">
+      <div className="popup-content">
+        <div className="popup-header">
+          <h2>Special Offer!</h2>
+          <button className="close-btn" onClick={onClose}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <div className="popup-body">
+          <div className="offer-badge">Limited Time Offer</div>
+          <p className="offer-text">Learn Flutter for just ₹99!</p>
+          <div className="timing-container">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 8V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <p className="timing">Sunday Night 9:00 PM</p>
+          </div>
+          <button className="register-btn" onClick={onRegister}>
+            Register Now
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Registration Form Component
+const RegistrationForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    paymentScreenshot: null as File | null
+  });
+  const [showWhatsApp, setShowWhatsApp] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFormData({
+        ...formData,
+        paymentScreenshot: e.target.files[0]
+      });
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Here you would typically send the form data to your backend
+    setShowWhatsApp(true);
+  };
+
+  return (
+    <div className="registration-overlay">
+      <div className="registration-content">
+        <button className="close-btn" onClick={onClose}>×</button>
+        <h2>Registration Form</h2>
+        
+        <div className="payment-info">
+          <h3>Payment Details</h3>
+          <p>UPI ID: example@upi</p>
+          <div className="qr-code">
+            <img src="/qr-code.png" alt="Payment QR Code" />
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Name:</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Email:</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Phone:</label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Payment Screenshot:</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileUpload}
+              required
+            />
+          </div>
+
+          <button type="submit" className="submit-btn">Register</button>
+        </form>
+
+        {showWhatsApp && (
+          <div className="whatsapp-section">
+            <h3>Registration Successful!</h3>
+            <p>Join our WhatsApp group to get started:</p>
+            <a href="https://wa.me/your-group-link" className="whatsapp-btn" target="_blank" rel="noopener noreferrer">
+              Join WhatsApp Group
+            </a>
+          </div>
+        )}
+
+        <div className="contact-info">
+          <h3>For any queries:</h3>
+          <p>📧 support@example.com</p>
+          <p>📱 +91 1234567890</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const LoadingScreen: React.FC = () => {
   return (
     <div className="loading-screen">
@@ -39,6 +186,8 @@ const App: React.FC = () => {
   const logoRef = useRef<HTMLImageElement>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showPopup, setShowPopup] = useState(true);
+  const [showRegistration, setShowRegistration] = useState(false);
   let scene: THREE.Scene;
   let camera: THREE.PerspectiveCamera;
   let renderer: THREE.WebGLRenderer;
@@ -385,6 +534,20 @@ const App: React.FC = () => {
 
   return (
     <>
+      {showPopup && (
+        <PopupAd
+          onClose={() => setShowPopup(false)}
+          onRegister={() => {
+            setShowPopup(false);
+            setShowRegistration(true);
+          }}
+        />
+      )}
+
+      {showRegistration && (
+        <RegistrationForm onClose={() => setShowRegistration(false)} />
+      )}
+
       <div className="scroll-indicator" id="scrollIndicator"></div>
       <canvas ref={canvasRef} id="bg-canvas"></canvas>
       

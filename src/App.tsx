@@ -707,7 +707,7 @@ const App: React.FC = () => {
         <div className="hero-container">
           <div className="hero-content">
             <div className="hero-badge">
-              <span>🚀 Premium Digital Solutions</span>
+              <span>🚀 Digital Solutions</span>
             </div>
             
             <h1 className="hero-title">

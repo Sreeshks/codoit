@@ -53,15 +53,15 @@ const PopupAd: React.FC<{ onClose: () => void; onRegister: () => void }> = ({ on
   );
 };
 
-// Registration Form Component
-const RegistrationForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+// 3-Step Registration Popup Component
+const RegistrationPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
-    phone: '',
+    collegeName: '',
     paymentScreenshot: null as File | null
   });
-  const [showWhatsApp, setShowWhatsApp] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -72,95 +72,210 @@ const RegistrationForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        alert('Please upload an image file');
+        return;
+      }
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File size should be less than 5MB');
+        return;
+      }
       setFormData({
         ...formData,
-        paymentScreenshot: e.target.files[0]
+        paymentScreenshot: file
       });
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Here you would typically send the form data to your backend
-    setShowWhatsApp(true);
+  const handleNext = () => {
+    if (currentStep === 1 && (!formData.name || !formData.collegeName)) {
+      alert('Please fill in all fields');
+      return;
+    }
+    if (currentStep === 2 && !formData.paymentScreenshot) {
+      alert('Please upload payment screenshot');
+      return;
+    }
+    setCurrentStep(currentStep + 1);
+  };
+
+  const handleBack = () => {
+    setCurrentStep(currentStep - 1);
+  };
+
+  const handleSubmit = async () => {
+    setIsUploading(true);
+    // Simulate upload delay
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    setIsUploading(false);
+    setCurrentStep(3);
   };
 
   return (
-    <div className="registration-overlay">
-      <div className="registration-content">
-        <button className="close-btn" onClick={onClose}>×</button>
-        <h2>Registration Form</h2>
-        
-        <div className="payment-info">
-          <h3>Payment Details</h3>
-          <p>UPI ID: example@upi</p>
-          <div className="qr-code">
-            <img src="/qr-code.png" alt="Payment QR Code" />
+    <div className="registration-popup-overlay">
+      <div className="registration-popup-content">
+        <button className="close-btn" onClick={onClose}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+
+        {/* Progress Indicator */}
+        <div className="progress-indicator">
+          <div className={`progress-step ${currentStep >= 1 ? 'active' : ''}`}>
+            <div className="step-number">1</div>
+            <span>Details</span>
+          </div>
+          <div className={`progress-step ${currentStep >= 2 ? 'active' : ''}`}>
+            <div className="step-number">2</div>
+            <span>Payment</span>
+          </div>
+          <div className={`progress-step ${currentStep >= 3 ? 'active' : ''}`}>
+            <div className="step-number">3</div>
+            <span>Success</span>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Name:</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+        {/* Step 1: Registration Form */}
+        {currentStep === 1 && (
+          <div className="popup-step">
+            <h2>Registration Details</h2>
+            <p className="step-description">Please provide your information to get started</p>
+            
+            <div className="form-group">
+              <label htmlFor="name">Full Name *</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
 
-          <div className="form-group">
-            <label>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+            <div className="form-group">
+              <label htmlFor="collegeName">College/School Name *</label>
+              <input
+                type="text"
+                id="collegeName"
+                name="collegeName"
+                value={formData.collegeName}
+                onChange={handleInputChange}
+                placeholder="Enter your college or school name"
+                required
+              />
+            </div>
 
-          <div className="form-group">
-            <label>Phone:</label>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Payment Screenshot:</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileUpload}
-              required
-            />
-          </div>
-
-          <button type="submit" className="submit-btn">Register</button>
-        </form>
-
-        {showWhatsApp && (
-          <div className="whatsapp-section">
-            <h3>Registration Successful!</h3>
-            <p>Join our WhatsApp group to get started:</p>
-            <a href="https://wa.me/your-group-link" className="whatsapp-btn" target="_blank" rel="noopener noreferrer">
-              Join WhatsApp Group
-            </a>
+            <button className="btn-primary" onClick={handleNext}>
+              Next Step
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
           </div>
         )}
 
-        <div className="contact-info">
-          <h3>For any queries:</h3>
-          <p>📧 support@example.com</p>
-          <p>📱 +91 1234567890</p>
-        </div>
+        {/* Step 2: Payment */}
+        {currentStep === 2 && (
+          <div className="popup-step">
+            <h2>Payment</h2>
+            <p className="step-description">Please pay ₹99 via GPay and upload the screenshot</p>
+            
+            <div className="payment-section">
+              <div className="payment-info">
+                <div className="payment-amount">₹99</div>
+                <p>Flutter Course Registration</p>
+              </div>
+              
+              <a 
+                href="https://pay.google.com/gp/v/u/0/app/info?merchant=your-merchant-id" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="gpay-button"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Pay with GPay
+              </a>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="paymentScreenshot">Payment Screenshot *</label>
+              <div className="file-upload-area">
+                <input
+                  type="file"
+                  id="paymentScreenshot"
+                  name="paymentScreenshot"
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                  required
+                />
+                <div className="file-upload-content">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <p>{formData.paymentScreenshot ? formData.paymentScreenshot.name : 'Click to upload payment screenshot'}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="step-buttons">
+              <button className="btn-secondary" onClick={handleBack}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Back
+              </button>
+              <button className="btn-primary" onClick={handleSubmit} disabled={!formData.paymentScreenshot || isUploading}>
+                {isUploading ? 'Uploading...' : 'Submit Payment'}
+                {!isUploading && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Step 3: Success + WhatsApp */}
+        {currentStep === 3 && (
+          <div className="popup-step">
+            <div className="success-content">
+              <div className="success-icon">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M22 4L12 14.01l-3-3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              
+              <h2>Payment Received! 🎉</h2>
+              <p className="success-message">Your registration is complete. Click below to join our WhatsApp group and start learning!</p>
+              
+              <a 
+                href="https://chat.whatsapp.com/LPCTpyZzYMGJD0Aiu6IG4M" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="whatsapp-button"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Join WhatsApp Group
+              </a>
+              
+              <button className="btn-secondary" onClick={onClose}>
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -181,6 +296,7 @@ const LoadingScreen: React.FC = () => {
   );
 };
 
+
 const App: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const logoRef = useRef<HTMLImageElement>(null);
@@ -188,6 +304,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showPopup, setShowPopup] = useState(true);
   const [showRegistration, setShowRegistration] = useState(false);
+  const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
   let scene: THREE.Scene;
   let camera: THREE.PerspectiveCamera;
   let renderer: THREE.WebGLRenderer;
@@ -364,11 +481,15 @@ const App: React.FC = () => {
     // Mobile menu toggle
     const mobileMenu = document.querySelector('.mobile-menu');
     const navLinks = document.querySelector('.nav-links');
+    const navButtons = document.querySelector('.nav-buttons');
     
     if (mobileMenu && navLinks) {
       mobileMenu.addEventListener('click', () => {
         navLinks.classList.toggle('active');
         mobileMenu.classList.toggle('active');
+        if (navButtons) {
+          navButtons.classList.toggle('mobile-visible');
+        }
       });
     }
 
@@ -539,13 +660,13 @@ const App: React.FC = () => {
           onClose={() => setShowPopup(false)}
           onRegister={() => {
             setShowPopup(false);
-            setShowRegistration(true);
+            setShowRegistrationPopup(true);
           }}
         />
       )}
 
-      {showRegistration && (
-        <RegistrationForm onClose={() => setShowRegistration(false)} />
+      {showRegistrationPopup && (
+        <RegistrationPopup onClose={() => setShowRegistrationPopup(false)} />
       )}
 
       <div className="scroll-indicator" id="scrollIndicator"></div>
@@ -567,7 +688,10 @@ const App: React.FC = () => {
                 <li><a href="#features">Features</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-          <button className="cta-btn">Get Started</button>
+          <div className="nav-buttons">
+            <button className="register-btn-nav" onClick={() => setShowRegistrationPopup(true)}>Register</button>
+            <button className="cta-btn">Get Started</button>
+          </div>
           <div className="mobile-menu">
                 <span></span>
                 <span></span>
@@ -590,7 +714,7 @@ const App: React.FC = () => {
             <p className="hero-subtitle">We turn innovative ideas into powerful digital solutions that drive growth and success for forward-thinking businesses.</p>
             <div className="hero-buttons">
               <a href="#services" className="btn-primary">Explore Services</a>
-              <a href="#contact" className="btn-secondary">Start Project</a>
+              <button className="btn-secondary" onClick={() => setShowRegistrationPopup(true)}>Register Now</button>
             </div>
             </div>
         </div>
@@ -699,7 +823,7 @@ const App: React.FC = () => {
           <h2 className="cta-title">Ready to Transform Your Business?</h2>
           <p className="section-subtitle">Let's discuss how CO DO IT can bring your vision to life with cutting-edge digital solutions.</p>
           <div className="hero-buttons">
-            <a href="#" className="btn-primary">Start Your Project</a>
+            <button className="btn-primary" onClick={() => setShowRegistrationPopup(true)}>Start Your Project</button>
             <a href="#" className="btn-secondary">Schedule Consultation</a>
             </div>
         </div>

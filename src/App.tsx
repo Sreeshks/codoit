@@ -595,7 +595,7 @@ const App: React.FC = () => {
     const mouseX = (window.mouseX || 0) * 0.001;
     const mouseY = (window.mouseY || 0) * 0.001;
     
-    particles.forEach((particle, index) => {
+    particles.forEach((particle, ) => {
       // Update position
       particle.position.x += particle.velocity.x;
       particle.position.y += particle.velocity.y;

@@ -303,7 +303,6 @@ const App: React.FC = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showPopup, setShowPopup] = useState(true);
-  const [showRegistration, setShowRegistration] = useState(false);
   const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
   let scene: THREE.Scene;
   let camera: THREE.PerspectiveCamera;
@@ -706,19 +705,83 @@ const App: React.FC = () => {
         <div className="floating-element floating-3"></div>
         
         <div className="hero-container">
-          <div className="hero-logo">
-            <img src="/Codoit Logo.jpeg" alt="CO DO IT Logo" className="hero-logo-image" />
-          </div>
           <div className="hero-content">
-            <h1 className="hero-title">Transform Your Digital Vision</h1>
-            <p className="hero-subtitle">We turn innovative ideas into powerful digital solutions that drive growth and success for forward-thinking businesses.</p>
+            <div className="hero-badge">
+              <span>🚀 Premium Digital Solutions</span>
+            </div>
+            
+            <h1 className="hero-title">
+              Transform Your 
+              <span className="gradient-text"> Digital Vision</span>
+            </h1>
+            
+            <p className="hero-subtitle">
+              We turn innovative ideas into powerful digital solutions that drive growth and success for forward-thinking businesses. From concept to deployment, we deliver excellence.
+            </p>
+            
+            <div className="hero-stats">
+              <div className="stat-item">
+                <span className="stat-number">500+</span>
+                <span className="stat-label">Projects Completed</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">98%</span>
+                <span className="stat-label">Client Satisfaction</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">24/7</span>
+                <span className="stat-label">Support Available</span>
+              </div>
+            </div>
+            
             <div className="hero-buttons">
-              <a href="#services" className="btn-primary">Explore Services</a>
-              <button className="btn-secondary" onClick={() => setShowRegistrationPopup(true)}>Register Now</button>
+              <button className="btn-primary" onClick={() => setShowRegistrationPopup(true)}>
+                <span>Start Your Project</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              <a href="#services" className="btn-secondary">
+                <span>Explore Services</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
             </div>
+            
+            <div className="hero-trust">
+              <span className="trust-label">Trusted by leading companies</span>
+              <div className="trust-logos">
+                <div className="trust-logo">TechCorp</div>
+                <div className="trust-logo">InnovateLab</div>
+                <div className="trust-logo">DigitalFlow</div>
+              </div>
             </div>
+          </div>
+          
+          <div className="hero-visual">
+            <div className="hero-logo">
+              <img src="/Codoit Logo.jpeg" alt="CO DO IT Logo" className="hero-logo-image" />
+            </div>
+            <div className="hero-glow"></div>
+            <div className="hero-particles">
+              <div className="particle-dot"></div>
+              <div className="particle-dot"></div>
+              <div className="particle-dot"></div>
+              <div className="particle-dot"></div>
+            </div>
+          </div>
         </div>
-    </section>
+        
+        <div className="hero-scroll-indicator">
+          <div className="scroll-text">Scroll to explore</div>
+          <div className="scroll-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 13L12 18L17 13M7 6L12 11L17 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </section>
     
       <section className="services" id="services">
         <h2 className="section-title">Our Premium Services</h2>

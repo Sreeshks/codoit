@@ -23,30 +23,22 @@ declare global {
 const PopupAd: React.FC<{ onClose: () => void; onRegister: () => void }> = ({ onClose, onRegister }) => {
   return (
     <div className="popup-overlay">
-      <div className="popup-content">
-        <div className="popup-header">
-          <h2>Special Offer!</h2>
+      <div className="popup-content poster-popup-content">
           <button className="close-btn" onClick={onClose}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
-        </div>
-        <div className="popup-body">
-          <div className="offer-badge">Limited Time Offer</div>
-          <p className="offer-text">Learn Flutter for just ₹99!</p>
-          <div className="timing-container">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 8V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <p className="timing">Sunday Night 9:00 PM</p>
-          </div>
-          <button className="register-btn" onClick={onRegister}>
+        <div className="poster-popup-image-container">
+          <img src="/sunday flutter.png" alt="Flutter Special Offer Poster" className="poster-popup-image" />
+          <div className="poster-popup-overlay">
+            <button className="poster-popup-register-btn" onClick={onRegister}>
             Register Now
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
+          </div>
         </div>
       </div>
     </div>
@@ -145,31 +137,31 @@ const RegistrationPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             <h2>Registration Details</h2>
             <p className="step-description">Please provide your information to get started</p>
             
-            <div className="form-group">
+          <div className="form-group">
               <label htmlFor="name">Full Name *</label>
-              <input
-                type="text"
+            <input
+              type="text"
                 id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
                 placeholder="Enter your full name"
-                required
-              />
-            </div>
+              required
+            />
+          </div>
 
-            <div className="form-group">
+          <div className="form-group">
               <label htmlFor="collegeName">College/School Name *</label>
-              <input
+            <input
                 type="text"
                 id="collegeName"
                 name="collegeName"
                 value={formData.collegeName}
-                onChange={handleInputChange}
+              onChange={handleInputChange}
                 placeholder="Enter your college or school name"
-                required
-              />
-            </div>
+              required
+            />
+          </div>
 
             <button className="btn-primary" onClick={handleNext}>
               Next Step
@@ -203,19 +195,19 @@ const RegistrationPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 </svg>
                 Pay with GPay
               </a>
-            </div>
+          </div>
 
-            <div className="form-group">
+          <div className="form-group">
               <label htmlFor="paymentScreenshot">Payment Screenshot *</label>
               <div className="file-upload-area">
-                <input
-                  type="file"
+            <input
+              type="file"
                   id="paymentScreenshot"
                   name="paymentScreenshot"
-                  accept="image/*"
-                  onChange={handleFileUpload}
-                  required
-                />
+              accept="image/*"
+              onChange={handleFileUpload}
+              required
+            />
                 <div className="file-upload-content">
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -223,7 +215,7 @@ const RegistrationPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                   <p>{formData.paymentScreenshot ? formData.paymentScreenshot.name : 'Click to upload payment screenshot'}</p>
                 </div>
               </div>
-            </div>
+          </div>
 
             <div className="step-buttons">
               <button className="btn-secondary" onClick={handleBack}>
@@ -267,13 +259,13 @@ const RegistrationPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                Join WhatsApp Group
-              </a>
+              Join WhatsApp Group
+            </a>
               
               <button className="btn-secondary" onClick={onClose}>
                 Close
               </button>
-            </div>
+        </div>
           </div>
         )}
       </div>
@@ -304,6 +296,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showPopup, setShowPopup] = useState(true);
   const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   let scene: THREE.Scene;
   let camera: THREE.PerspectiveCamera;
   let renderer: THREE.WebGLRenderer;
@@ -667,31 +660,19 @@ const App: React.FC = () => {
       {showRegistrationPopup && (
         <RegistrationPopup onClose={() => setShowRegistrationPopup(false)} />
       )}
-
+  
       <div className="scroll-indicator" id="scrollIndicator"></div>
       <canvas ref={canvasRef} id="bg-canvas"></canvas>
       
     <nav id="navbar">
         <div className="nav-container">
-          <div className="logo">
-            <img 
-              ref={logoRef}
-              src="/Codoit Logo.jpeg" 
-              alt="CO DO IT Logo" 
-              className="logo-image nav-logo-image" 
-            />
-          </div>
-          <ul className="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#contact">Contact</a></li>
+          <ul className={`nav-links${isMobileMenuOpen ? ' active' : ''}`}>
+            <li><a href="#home" onClick={() => setIsMobileMenuOpen(false)}>Home</a></li>
+            <li><a href="#services" onClick={() => setIsMobileMenuOpen(false)}>Services</a></li>
+            <li><a href="#features" onClick={() => setIsMobileMenuOpen(false)}>Features</a></li>
+            <li><a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</a></li>
             </ul>
-          <div className="nav-buttons">
-            <button className="register-btn-nav" onClick={() => setShowRegistrationPopup(true)}>Register</button>
-            <button className="cta-btn">Get Started</button>
-          </div>
-          <div className="mobile-menu">
+          <div className="mobile-menu" onClick={() => setIsMobileMenuOpen(v => !v)}>
                 <span></span>
                 <span></span>
                 <span></span>
@@ -760,9 +741,9 @@ const App: React.FC = () => {
           </div>
           
           <div className="hero-visual">
-            <div className="hero-logo">
-              <img src="/Codoit Logo.jpeg" alt="CO DO IT Logo" className="hero-logo-image" />
-            </div>
+          <div className="hero-logo">
+            <img src="/Codoit Logo.jpeg" alt="CO DO IT Logo" className="hero-logo-image" />
+          </div>
             <div className="hero-glow"></div>
             <div className="hero-particles">
               <div className="particle-dot"></div>
@@ -770,7 +751,7 @@ const App: React.FC = () => {
               <div className="particle-dot"></div>
               <div className="particle-dot"></div>
             </div>
-          </div>
+            </div>
         </div>
         
         <div className="hero-scroll-indicator">
@@ -779,6 +760,36 @@ const App: React.FC = () => {
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M7 13L12 18L17 13M7 6L12 11L17 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
+          </div>
+        </div>
+    </section>
+    
+      <section className="poster-section">
+        <div className="poster-container">
+          <div className="poster-scroll-container">
+            <div className="poster-image-container">
+              <img src="/sunday flutter.png" alt="Flutter Special Offer Poster" className="poster-section-image" />
+              <div className="poster-section-overlay">
+                <button className="poster-section-register-btn" onClick={() => setShowRegistrationPopup(true)}>
+                  Register Now
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            {/* Future images will be added here */}
+            {/* <div className="poster-image-container">
+              <img src="/future-image-2.png" alt="Future Poster 2" className="poster-section-image" />
+              <div className="poster-section-overlay">
+                <button className="poster-section-register-btn" onClick={() => setShowRegistrationPopup(true)}>
+                  Register Now
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div> */}
           </div>
         </div>
       </section>

@@ -24,11 +24,7 @@ const PopupAd: React.FC<{ onClose: () => void; onRegister: () => void }> = ({ on
   return (
     <div className="popup-overlay">
       <div className="popup-content poster-popup-content">
-          <button className="close-btn" onClick={onClose}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
+       
         <div className="poster-popup-image-container">
           <img src="/sunday flutter.png" alt="Flutter Special Offer Poster" className="poster-popup-image" />
           <div className="poster-popup-overlay">
@@ -38,6 +34,11 @@ const PopupAd: React.FC<{ onClose: () => void; onRegister: () => void }> = ({ on
               <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
+          <button className="close-btn" onClick={onClose}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
           </div>
         </div>
       </div>
@@ -700,7 +701,7 @@ const App: React.FC = () => {
               We turn innovative ideas into powerful digital solutions that drive growth and success for forward-thinking businesses. From concept to deployment, we deliver excellence.
             </p>
             
-            <div className="hero-stats">
+            {/* <div className="hero-stats">
               <div className="stat-item">
                 <span className="stat-number">500+</span>
                 <span className="stat-label">Projects Completed</span>
@@ -713,7 +714,7 @@ const App: React.FC = () => {
                 <span className="stat-number">24/7</span>
                 <span className="stat-label">Support Available</span>
               </div>
-            </div>
+            </div> */}
             
             <div className="hero-buttons">
               <button className="btn-primary" onClick={() => setShowRegistrationPopup(true)}>

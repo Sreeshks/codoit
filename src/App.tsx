@@ -35,11 +35,11 @@ const PopupAd: React.FC<{ onClose: () => void; onRegister: () => void }> = ({ on
             </svg>
           </button>
           <button className="close-btn" onClick={onClose}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-          </div>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        </div>
         </div>
       </div>
     </div>
@@ -667,17 +667,12 @@ const App: React.FC = () => {
       
     <nav id="navbar">
         <div className="nav-container">
-          <ul className={`nav-links${isMobileMenuOpen ? ' active' : ''}`}>
-            <li><a href="#home" onClick={() => setIsMobileMenuOpen(false)}>Home</a></li>
-            <li><a href="#services" onClick={() => setIsMobileMenuOpen(false)}>Services</a></li>
-            <li><a href="#features" onClick={() => setIsMobileMenuOpen(false)}>Features</a></li>
-            <li><a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</a></li>
+          <ul className="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
-          <div className="mobile-menu" onClick={() => setIsMobileMenuOpen(v => !v)}>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
         </div>
     </nav>
     
@@ -791,9 +786,9 @@ const App: React.FC = () => {
                 </button>
               </div>
             </div> */}
-          </div>
+            </div>
         </div>
-      </section>
+    </section>
     
       <section className="services" id="services">
         <h2 className="section-title">Our Premium Services</h2>

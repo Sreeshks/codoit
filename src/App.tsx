@@ -946,9 +946,9 @@ const App: React.FC = () => {
             
           <div className="footer-section">
                 <h4>Contact Info</h4>
-                <p>📧 hello@codoit.com</p>
-                <p>📱 +1 (555) 123-4567</p>
-                <p>📍 San Francisco, CA</p>
+                <p>📧 codoit53@gmail.com </p>
+                <p>Insta Co_do_it</p>
+                <p>Kerala</p>
             </div>
         </div>
         
